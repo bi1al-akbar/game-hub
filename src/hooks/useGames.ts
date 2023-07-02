@@ -12,7 +12,7 @@ export interface Game {
 	name: string;
 	background_image: string;
 	parent_platforms: { platform: Platform }[];
-	metacritic: number; 
+	metacritic: number;
 }
 interface FetchGameResponse {
 	count: number;
@@ -24,22 +24,27 @@ const useGames = () => {
 
 	const [games, setGames] = useState<Game[]>([]);
 	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
+		setIsLoading(true);
 		apiClient
 			.get<FetchGameResponse>("/games", { signal: abortController.signal })
 			.then((res) => {
 				setGames(res.data.results);
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				if (error instanceof CanceledError) return;
 				setError(error.message);
+				setIsLoading(false);
 			});
 
-		return () => {
-			abortController.abort();
-		};
+		// return () => {
+		// 	console.log("aborting...");
+		// 	abortController.abort();
+		// }; 
 	}, []);
-	return { games, error };
+	return { games, error, isLoading };
 };
 
 export default useGames;
