@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import apiClient, { CanceledError } from "../services/api-client";
+import useData from "./useData";
 
 export interface Platform {
 	id: number;
@@ -14,37 +13,7 @@ export interface Game {
 	parent_platforms: { platform: Platform }[];
 	metacritic: number;
 }
-interface FetchGameResponse {
-	count: number;
-	results: Game[];
-}
 
-const useGames = () => {
-	const abortController = new AbortController();
-
-	const [games, setGames] = useState<Game[]>([]);
-	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	useEffect(() => {
-		setIsLoading(true);
-		apiClient
-			.get<FetchGameResponse>("/games", { signal: abortController.signal })
-			.then((res) => {
-				setGames(res.data.results);
-				setIsLoading(false);
-			})
-			.catch((error) => {
-				if (error instanceof CanceledError) return;
-				setError(error.message);
-				setIsLoading(false);
-			});
-
-		// return () => {
-		// 	console.log("aborting...");
-		// 	abortController.abort();
-		// }; 
-	}, []);
-	return { games, error, isLoading };
-};
+const useGames = () => useData<Game>("/games");
 
 export default useGames;
