@@ -5,10 +5,10 @@ interface FetchResponse<T> {
 	count: number;
 	results: T[];
 }
-const useData = <T>(endPoint: string, requestConfig?: AxiosRequestConfig, deps?: any[]) => {
+const useData = <T>(endPoint: string, requestConfig?: AxiosRequestConfig, deps?: unknown[]) => {
 	//AxiosRequestConfig is used to pass params to the api call
 
-	const [data, setDta] = useState<T[]>([]);
+	const [data, setData] = useState<T[]>([]);
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	useEffect(
@@ -18,8 +18,8 @@ const useData = <T>(endPoint: string, requestConfig?: AxiosRequestConfig, deps?:
 			apiClient
 				.get<FetchResponse<T>>(endPoint, { signal: abortController.signal, ...requestConfig })
 				.then((res) => {
-					setDta(res.data.results);
-					setIsLoading(false);
+					setData(res.data.results);
+					setIsLoading(false);	
 				})
 				.catch((error) => {
 					if (error instanceof CanceledError) return;
@@ -31,7 +31,7 @@ const useData = <T>(endPoint: string, requestConfig?: AxiosRequestConfig, deps?:
 				abortController.abort();
 			};
 		},
-		deps ? [...deps] : []
+		deps ? [...deps] : [] 
 	);
 	return { data, error, isLoading };
 };
