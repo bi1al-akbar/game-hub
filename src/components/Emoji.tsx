@@ -1,4 +1,4 @@
-import heart from "../assets/heart.gif";
+import heart from "../assets/Heart.gif";
 import star from "../assets/star.gif";
 import Super from "../assets/Super.gif";
 import { Image, ImageProps } from "@chakra-ui/react";
