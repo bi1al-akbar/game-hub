@@ -13,12 +13,22 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
 	if (isLoading) return <Spinner></Spinner>;
 	return (
 		<>
-			<Heading fontSize={"3xl"} marginY={"10px"}>Genres</Heading>
+			<Heading
+				fontSize={"3xl"}
+				marginY={"10px"}>
+				Genres
+			</Heading>
 			<List>
-				{genres.map((genre) => (
-					<List key={genre.id} paddingY={"5px"}>
+				{genres.results.map((genre) => (
+					<List
+						key={genre.id}
+						paddingY={"5px"}>
 						<HStack>
-							<Image objectFit={"cover"} boxSize={"32px"} borderRadius={"8px"} src={getCroppedImgUrl(genre.image_background)}></Image>
+							<Image
+								objectFit={"cover"}
+								boxSize={"32px"}
+								borderRadius={"8px"}
+								src={getCroppedImgUrl(genre.image_background)}></Image>
 							<Button
 								whiteSpace={"normal"}
 								textAlign={"left"}
