@@ -10,7 +10,7 @@ interface Props {
 	gameQuery: GameQuery;
 }
 const GameGrid = ({ gameQuery }: Props) => {
-	const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useGames(gameQuery);
+	const { data, error, isLoading, hasNextPage, fetchNextPage } = useGames(gameQuery);
 	const skeletons = [1, 2, 3, 4, 5, 6];
 	const fetchedGamesCount = data?.pages.reduce((total, page) => total + page.results.length, 0) || 0; //reduce to get total number of games fetched
 	return (
