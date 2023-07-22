@@ -8,7 +8,7 @@ export interface Platform {
 	slug: string;
 }
 
-const usePlatform = () => {
+const usePlatforms = () => {
 	return useQuery({
 		queryKey: ["platforms"],
 		queryFn: apiClient.getAll,
@@ -16,4 +16,4 @@ const usePlatform = () => {
 	});
 };
 
-export default usePlatform;
+export default usePlatforms;
