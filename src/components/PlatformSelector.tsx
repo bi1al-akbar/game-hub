@@ -2,16 +2,12 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 import usePlatforms from "../hooks/usePlatforms";
 import usePlatform from "../hooks/usePlatform";
+import useGameQueryStore from "../store";
 
-interface Props {
-	onSelectPlatform: (platformId: number) => void;
-	selectedPlatformId?: number;
-}
-
-const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
+const PlatformSelector = () => {
 	const { data, error } = usePlatforms();
-	const selectedPlatform = usePlatform(selectedPlatformId);
-
+	const {gameQuery,setPlatformId} =  useGameQueryStore();
+	const selectedPlatform = usePlatform(gameQuery.platformId);
 	if (error) return null;
 	return (
 		<Menu>
@@ -20,7 +16,7 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
 			</MenuButton>
 			<MenuList>
 				{data?.results.map((platform) => (
-					<MenuItem onClick={() => onSelectPlatform(platform.id)} key={platform.id}>
+					<MenuItem onClick={() => setPlatformId(platform.id)} key={platform.id}>
 						{platform.name}
 					</MenuItem>
 				))}
