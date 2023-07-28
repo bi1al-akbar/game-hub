@@ -1,19 +1,33 @@
 import { useParams } from "react-router-dom";
 import useGame from "../hooks/useGame";
-import { Heading, Spinner, Text } from "@chakra-ui/react";
+import { Button, Heading, Spinner, Text } from "@chakra-ui/react";
+import { useState } from "react";
 
 const GameDetailPage = () => {
 	const { slug } = useParams();
-    const { data, error, isLoading } = useGame(slug!); //By this we are telling ts that it will not be null;
-    
-    if (isLoading) return <Spinner />
-    if (error || !data) throw error;
-    return (
-			<>
-				<Heading>{data.name}</Heading>
-				<Text>{data.description_raw}</Text>
-			</>
-		);
+	const { data, error, isLoading } = useGame(slug!); //By this we are telling ts that it will not be null;
+	const [expanded, setExpanded] = useState(false);
+	const gameDescription = expanded ? data?.description_raw : data?.description_raw.slice(0, 250) + "...";
+
+	if (isLoading) return <Spinner />;
+	if (error || !data) throw error;
+	return (
+		<>
+			<Heading>{data.name}</Heading>
+			<Text>
+				{gameDescription}
+				<Button size={"sm"}
+					fontWeight={"bold"}
+					colorScheme="yellow"
+					marginLeft={"10px"}
+					onClick={() => {
+						setExpanded(!expanded);
+					}}>
+					{expanded ? "Show less" : "Show More"}
+				</Button>
+			</Text>
+		</>
+	);
 };
 
 export default GameDetailPage;
