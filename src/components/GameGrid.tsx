@@ -13,6 +13,7 @@ const GameGrid = () => {
 	const fetchedGamesCount = data?.pages.reduce((total, page) => total + page.results.length, 0) || 0; //reduce to get total number of games fetched
 	return (
 		<InfiniteScroll
+			style={{paddingTop: "10px" ,paddingLeft: "10px"}}
 			dataLength={fetchedGamesCount}
 			next={fetchNextPage}
 			hasMore={!!hasNextPage} // !! to convert in to actual boolean value
