@@ -3,6 +3,7 @@ import useGame from "../hooks/useGame";
 import { Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import GameAttributes from "../components/GameAttributes";
+import GameTrailer from "../components/GameTrailer";
 
 const GameDetailPage = () => {
 	const { slug } = useParams();
@@ -29,6 +30,7 @@ const GameDetailPage = () => {
 				</Button>
 			</Text>
 			<GameAttributes data={data} />
+			<GameTrailer gameId={data.id} />
 			
 		</>
 	);
