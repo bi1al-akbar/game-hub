@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import useGame from "../hooks/useGame";
-import { Button, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Button, Grid, GridItem, Heading, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import GameAttributes from "../components/GameAttributes";
 import GameTrailer from "../components/GameTrailer";
@@ -16,23 +16,29 @@ const GameDetailPage = () => {
 	if (error || !data) throw error;
 	return (
 		<>
-			<Heading>{data.name}</Heading>
-			<Text>
-				{gameDescription}
-				<Button
-					size={"sm"}
-					fontWeight={"bold"}
-					colorScheme="yellow"
-					marginLeft={"10px"}
-					onClick={() => {
-						setExpanded(!expanded);
-					}}>
-					{expanded ? "Show less" : "Show More"}
-				</Button>
-			</Text>
-			<GameAttributes data={data} />
-			<GameTrailer gameId={data.id} />
-			<GameScreenShots gameId={data.id} />
+			<SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
+				<GridItem>
+					<Heading>{data.name}</Heading>
+					<Text>
+						{gameDescription}
+						<Button
+							size={"sm"}
+							fontWeight={"bold"}
+							colorScheme="yellow"
+							marginLeft={"10px"}
+							onClick={() => {
+								setExpanded(!expanded);
+							}}>
+							{expanded ? "Show less" : "Show More"}
+						</Button>
+					</Text>
+					<GameAttributes data={data} />
+				</GridItem>
+				<GridItem>
+					<GameTrailer gameId={data.id} />
+					<GameScreenShots gameId={data.id} />
+				</GridItem>
+			</SimpleGrid>
 		</>
 	);
 };
